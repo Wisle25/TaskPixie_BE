@@ -1,0 +1,761 @@
+{
+	"info": {
+		"_postman_id": "fd32116c-60d2-498c-a504-e4a9eb451151",
+		"name": "GO BE Template",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31734295"
+	},
+	"item": [
+		{
+			"name": "Auths",
+			"item": [
+				{
+					"name": "Register User [Validation Fail]",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Define function to generate random string\r",
+									"function generateRandomString(length) {\r",
+									"    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';\r",
+									"    let result = '';\r",
+									"    for (let i = 0; i < length; i++) {\r",
+									"        result += characters.charAt(Math.floor(Math.random() * characters.length));\r",
+									"    }\r",
+									"    return result;\r",
+									"}\r",
+									"\r",
+									"// Define function to generate random email\r",
+									"function generateRandomEmail() {\r",
+									"    const username = generateRandomString(Math.floor(Math.random() * (8 - 3 + 1)) + 3);\r",
+									"    const domain = generateRandomString(Math.floor(Math.random() * (6 - 3 + 1)) + 3);\r",
+									"    const extension = generateRandomString(2);\r",
+									"    return `${username}@${domain}.${extension}`;\r",
+									"}\r",
+									"\r",
+									"// Define function to generate nullable values\r",
+									"function generateNullableValues() {\r",
+									"    const nullableValues = {};\r",
+									"\r",
+									"    // Generate random username\r",
+									"    if (Math.random() < 0.5) {\r",
+									"        nullableValues.username = generateRandomString(Math.floor(Math.random() * (8 - 3 + 1)) + 3);\r",
+									"    } else {\r",
+									"        nullableValues.username = null;\r",
+									"    }\r",
+									"\r",
+									"    // Generate random email\r",
+									"    if (Math.random() < 0.5) {\r",
+									"        nullableValues.email = generateRandomEmail();\r",
+									"    } else {\r",
+									"        nullableValues.email = null;\r",
+									"    }\r",
+									"\r",
+									"    // Generate random password\r",
+									"    if (Math.random() < 0.5) {\r",
+									"        nullableValues.password = generateRandomString(Math.floor(Math.random() * 10) + 6);\r",
+									"    } else {\r",
+									"        nullableValues.password = null;\r",
+									"    }\r",
+									"\r",
+									"    // Generate random confirmPassword\r",
+									"    if (Math.random() < 0.5) {\r",
+									"        nullableValues.confirmPassword = generateRandomString(Math.floor(Math.random() * 10) + 6);\r",
+									"    } else {\r",
+									"        nullableValues.confirmPassword = null;\r",
+									"    }\r",
+									"\r",
+									"    return nullableValues;\r",
+									"}\r",
+									"\r",
+									"// Generate nullable values\r",
+									"const nullableValues = generateNullableValues();\r",
+									"\r",
+									"// Set environment variables\r",
+									"pm.environment.set('username', nullableValues.username);\r",
+									"pm.environment.set('email', nullableValues.email);\r",
+									"pm.environment.set('password', nullableValues.password);\r",
+									"pm.environment.set('confirmPassword', nullableValues.confirmPassword);\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code must be 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"pm.test(\"Status must be fail\", function () {\r",
+									"    pm.expect(jsonData.status).to.eql(\"fail\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"{{username}}\",\r\n    \"email\": \"{{email}}\",\r\n    \"password\": \"{{password}}\",\r\n    \"confirmPassword\": \"{{confirmPassword}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}:{{port}}/users",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register User [Success]",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code must be 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"pm.test(\"Status must be success\", function () {\r",
+									"    pm.expect(jsonData.status).to.eql(\"success\");\r",
+									"});\r",
+									"pm.test(\"Response must show the ID data\", function () {\r",
+									"    pm.expect(jsonData).to.have.property(\"data\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"anca25\",\r\n    \"email\": \"handidwic1225@gmail.com\",\r\n    \"password\": \"Passwordsayaini\",\r\n    \"confirmPassword\": \"Passwordsayaini\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}:{{port}}/users",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login [Validation Fail]",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code must be 400 or 404\", function () {\r",
+									"    pm.expect([400, 404]).to.include(pm.response.code);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status must be fail\", function () {\r",
+									"    pm.expect(jsonData.status).to.eql(\"fail\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Define function to generate random string\r",
+									"function generateRandomString(length) {\r",
+									"    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';\r",
+									"    let result = '';\r",
+									"    for (let i = 0; i < length; i++) {\r",
+									"        result += characters.charAt(Math.floor(Math.random() * characters.length));\r",
+									"    }\r",
+									"    return result;\r",
+									"}\r",
+									"\r",
+									"// Define function to generate random email\r",
+									"function generateRandomEmail() {\r",
+									"    const username = generateRandomString(Math.floor(Math.random() * (8 - 3 + 1)) + 3);\r",
+									"    const domain = generateRandomString(Math.floor(Math.random() * (6 - 3 + 1)) + 3);\r",
+									"    const extension = generateRandomString(2);\r",
+									"    return `${username}@${domain}.${extension}`;\r",
+									"}\r",
+									"\r",
+									"// Define function to generate nullable values\r",
+									"function generateNullableValues() {\r",
+									"    const nullableValues = {};\r",
+									"\r",
+									"    // Generate random username\r",
+									"    if (Math.random() < 0.5) {\r",
+									"        nullableValues.username = generateRandomString(Math.floor(Math.random() * (8 - 3 + 1)) + 3);\r",
+									"    } else {\r",
+									"        nullableValues.username = null;\r",
+									"    }\r",
+									"\r",
+									"    // Generate random email\r",
+									"    if (Math.random() < 0.5) {\r",
+									"        nullableValues.email = generateRandomEmail();\r",
+									"    } else {\r",
+									"        nullableValues.email = null;\r",
+									"    }\r",
+									"\r",
+									"    // Generate random password\r",
+									"    if (Math.random() < 0.5) {\r",
+									"        nullableValues.password = generateRandomString(Math.floor(Math.random() * 10) + 6);\r",
+									"    } else {\r",
+									"        nullableValues.password = null;\r",
+									"    }\r",
+									"\r",
+									"    // Generate random confirmPassword\r",
+									"    if (Math.random() < 0.5) {\r",
+									"        nullableValues.confirmPassword = generateRandomString(Math.floor(Math.random() * 10) + 6);\r",
+									"    } else {\r",
+									"        nullableValues.confirmPassword = null;\r",
+									"    }\r",
+									"\r",
+									"    return nullableValues;\r",
+									"}\r",
+									"\r",
+									"// Generate nullable values\r",
+									"const nullableValues = generateNullableValues();\r",
+									"\r",
+									"// Set environment variables\r",
+									"pm.environment.set('username', nullableValues.username);\r",
+									"pm.environment.set('email', nullableValues.email);\r",
+									"pm.environment.set('password', nullableValues.password);\r",
+									"pm.environment.set('confirmPassword', nullableValues.confirmPassword);\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"identity\": \"{{email}}\",\r\n    \"password\": \"{{password}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}:{{port}}/auths",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"auths"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Refresh Token [Failed]",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code must be 401\", function () {\r",
+									"    pm.response.to.have.status(401);\r",
+									"});\r",
+									"pm.test(\"Status must be fail\", function () {\r",
+									"    pm.expect(jsonData.status).to.eql(\"fail\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{host}}:{{port}}/auths",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"auths"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SignOut [Failed]",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code must be 401\", function () {\r",
+									"    pm.response.to.have.status(401);\r",
+									"});\r",
+									"pm.test(\"Status must be fail\", function () {\r",
+									"    pm.expect(jsonData.status).to.eql(\"fail\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}:{{port}}/auths",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"auths"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login [Success]",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code must be 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Status must be success\", function () {\r",
+									"    pm.expect(jsonData.status).to.eql(\"success\");\r",
+									"});\r",
+									"pm.test(\"Response must have message props\", function () {\r",
+									"    pm.expect(jsonData).to.have.property(\"message\");\r",
+									"});\r",
+									"pm.test(\"Response must have access token and refresh token\", function () {\r",
+									"    pm.expect(pm.cookies.get(\"access_token\")).not.undefined;\r",
+									"    pm.expect(pm.cookies.get(\"refresh_token\")).not.undefined;\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"identity\": \"anca25\",\r\n    \"password\": \"Passwordsayaini\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}:{{port}}/auths",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"auths"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Refresh Token [Success]",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code must be 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Status must be success\", function () {\r",
+									"    pm.expect(jsonData.status).to.eql(\"success\");\r",
+									"});\r",
+									"pm.test(\"Response must have access token and refresh token\", function () {\r",
+									"    pm.expect(pm.cookies.get(\"access_token\")).not.undefined;\r",
+									"    pm.expect(pm.cookies.get(\"refresh_token\")).not.undefined;\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{host}}:{{port}}/auths",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"auths"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SignOut [Success]",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code must be 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Status must be success\", function () {\r",
+									"    pm.expect(jsonData.status).to.eql(\"success\");\r",
+									"});\r",
+									"pm.test(\"Response must delete access token and refresh token\", function () {\r",
+									"    pm.expect(pm.cookies.get(\"access_token\")).is.undefined;\r",
+									"    pm.expect(pm.cookies.get(\"refresh_token\")).is.undefined;\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}:{{port}}/auths",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"auths"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register User [Email already in use]",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code must be 409\", function () {\r",
+									"    pm.response.to.have.status(409);\r",
+									"});\r",
+									"pm.test(\"Status must be success\", function () {\r",
+									"    pm.expect(jsonData.status).to.eql(\"fail\");\r",
+									"});\r",
+									"pm.test(\"Message must show email is already in use\", function () {\r",
+									"    pm.expect(jsonData.message).to.include(\"exists\");\r",
+									"});\r",
+									"\r",
+									"// remove any users\r",
+									"const host = pm.environment.get(\"host\")\r",
+									"const port = pm.environment.get(\"port\")\r",
+									"pm.sendRequest({\r",
+									"    url: `http://${host}:${port}/test/users`,\r",
+									"    method: \"DELETE\"\r",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"anca25\",\r\n    \"email\": \"handidwic1225@gmail.com\",\r\n    \"password\": \"Passwordsayaini\",\r\n    \"confirmPassword\": \"Passwordsayaini\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}:{{port}}/users",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Get User By Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}:{{port}}/users/01901c93-299d-7b64-80da-027d3ef12eb5",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"users",
+								"01901c93-299d-7b64-80da-027d3ef12eb5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User By Id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "anca25",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "updatedHandidwic1225@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "Passwordsayaini",
+									"type": "text"
+								},
+								{
+									"key": "confirmPassword",
+									"value": "Passwordsayaini",
+									"type": "text"
+								},
+								{
+									"key": "avatar",
+									"type": "file",
+									"src": "/D:/GoProjects/be-template/tests/avatar.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host}}:{{port}}/users/01901c93-299d-7b64-80da-027d3ef12eb5",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"users",
+								"01901c93-299d-7b64-80da-027d3ef12eb5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User's Avatar",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9000/be-template/01901c93-949f-7178-a6e6-7ab6063bdc8f.png",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"be-template",
+								"01901c93-949f-7178-a6e6-7ab6063bdc8f.png"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					"pm.test(\"Response time is less than 130ms\", function () {\r",
+					"    pm.expect(pm.response.responseTime).to.be.below(130);\r",
+					"});\r",
+					""
+				]
+			}
+		}
+	]
+}
