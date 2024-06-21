@@ -4,8 +4,9 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/gofiber/fiber/v2"
-	"github.com/wisle25/be-template/applications/use_case"
-	"github.com/wisle25/be-template/domains/entity"
+	"github.com/wisle25/task-pixie/applications/use_case"
+	"github.com/wisle25/task-pixie/domains/entity"
+	"strings"
 )
 
 // JwtMiddleware gonna verifying user credential for authentication/authorization reason
@@ -20,7 +21,7 @@ func NewJwtMiddleware(userUseCase *use_case.UserUseCase) *JwtMiddleware {
 
 func (m *JwtMiddleware) GuardJWT(c *fiber.Ctx) error {
 	// Getting access token
-	accessToken := c.Cookies("access_token")
+	accessToken := strings.TrimPrefix(c.Get("Authorization"), "Bearer ")
 
 	if accessToken == "" {
 		return fiber.NewError(fiber.StatusUnauthorized, "You are not logged in!")

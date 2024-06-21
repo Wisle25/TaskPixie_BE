@@ -4,12 +4,12 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/wisle25/be-template/commons"
-	"github.com/wisle25/be-template/domains/entity"
-	"github.com/wisle25/be-template/infrastructures/generator"
-	"github.com/wisle25/be-template/infrastructures/repository"
-	"github.com/wisle25/be-template/infrastructures/services"
-	"github.com/wisle25/be-template/tests/db_helper"
+	"github.com/wisle25/task-pixie/commons"
+	"github.com/wisle25/task-pixie/domains/entity"
+	"github.com/wisle25/task-pixie/infrastructures/generator"
+	"github.com/wisle25/task-pixie/infrastructures/repository"
+	"github.com/wisle25/task-pixie/infrastructures/services"
+	"github.com/wisle25/task-pixie/tests/db_helper"
 )
 
 func TestUserRepository(t *testing.T) {

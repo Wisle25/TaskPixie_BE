@@ -3,10 +3,9 @@
 import (
 	"fmt"
 	"github.com/gofiber/fiber/v2"
-	"github.com/wisle25/be-template/applications/use_case"
-	"github.com/wisle25/be-template/domains/entity"
+	"github.com/wisle25/task-pixie/applications/use_case"
+	"github.com/wisle25/task-pixie/domains/entity"
 	"strings"
-	"time"
 )
 
 type UserHandler struct {
@@ -43,26 +42,9 @@ func (h *UserHandler) Login(c *fiber.Ctx) error {
 	// Use Case
 	accessTokenDetail, refreshTokenDetail := h.useCase.ExecuteLogin(&payload)
 
-	// Insert the tokens to cookies
-	c.Cookie(&fiber.Cookie{
-		Name:     "access_token",
-		Value:    accessTokenDetail.Token,
-		Path:     "/",
-		MaxAge:   accessTokenDetail.MaxAge,
-		Secure:   true,
-		HTTPOnly: true,
-		Domain:   "localhost",
-	})
-
-	c.Cookie(&fiber.Cookie{
-		Name:     "refresh_token",
-		Value:    refreshTokenDetail.Token,
-		Path:     "/",
-		MaxAge:   refreshTokenDetail.MaxAge,
-		Secure:   true,
-		HTTPOnly: true,
-		Domain:   "localhost",
-	})
+	// Insert the tokens to headers
+	c.Set("Authorization", fmt.Sprintf("Bearer %s", accessTokenDetail.Token))
+	c.Set("X-Refresh-Token", refreshTokenDetail.Token)
 
 	// Response
 	return c.Status(fiber.StatusOK).JSON(fiber.Map{
@@ -78,16 +60,8 @@ func (h *UserHandler) RefreshToken(c *fiber.Ctx) error {
 	// Use Case
 	accessTokenDetail := h.useCase.ExecuteRefreshToken(refreshToken)
 
-	// Insert the tokens to cookies
-	c.Cookie(&fiber.Cookie{
-		Name:     "access_token",
-		Value:    accessTokenDetail.Token,
-		Path:     "/",
-		MaxAge:   accessTokenDetail.MaxAge,
-		Secure:   true,
-		HTTPOnly: true,
-		Domain:   "localhost",
-	})
+	// Insert the tokens to headers
+	c.Set("Authorization", fmt.Sprintf("Bearer %s", accessTokenDetail.Token))
 
 	// Response
 	return c.Status(fiber.StatusOK).JSON(fiber.Map{
@@ -97,25 +71,11 @@ func (h *UserHandler) RefreshToken(c *fiber.Ctx) error {
 
 func (h *UserHandler) Logout(c *fiber.Ctx) error {
 	// Payload
-	refreshToken := c.Cookies("refresh_token")
+	refreshToken := c.Get("X-Refresh-Token")
 	accessTokenId := c.Locals("accessTokenId").(string)
 
 	// Use Case
 	h.useCase.ExecuteLogout(refreshToken, accessTokenId)
-
-	// Remove from cookie
-	expiredTime := time.Now().Add(-time.Hour * 24)
-
-	c.Cookie(&fiber.Cookie{
-		Name:    "access_token",
-		Value:   "",
-		Expires: expiredTime,
-	})
-	c.Cookie(&fiber.Cookie{
-		Name:    "refresh_token",
-		Value:   "",
-		Expires: expiredTime,
-	})
 
 	// Response
 	return c.Status(200).JSON(fiber.Map{

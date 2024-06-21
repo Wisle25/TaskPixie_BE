@@ -3,9 +3,9 @@
 import (
 	"context"
 	"github.com/stretchr/testify/assert"
-	"github.com/wisle25/be-template/commons"
-	"github.com/wisle25/be-template/infrastructures/cache"
-	"github.com/wisle25/be-template/infrastructures/services"
+	"github.com/wisle25/task-pixie/commons"
+	"github.com/wisle25/task-pixie/infrastructures/cache"
+	"github.com/wisle25/task-pixie/infrastructures/services"
 	"testing"
 	"time"
 )

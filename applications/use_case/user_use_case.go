@@ -3,13 +3,13 @@ package use_case
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/wisle25/be-template/applications/cache"
-	"github.com/wisle25/be-template/applications/file_statics"
-	"github.com/wisle25/be-template/applications/security"
-	"github.com/wisle25/be-template/applications/validation"
-	"github.com/wisle25/be-template/commons"
-	"github.com/wisle25/be-template/domains/entity"
-	"github.com/wisle25/be-template/domains/repository"
+	"github.com/wisle25/task-pixie/applications/cache"
+	"github.com/wisle25/task-pixie/applications/file_statics"
+	"github.com/wisle25/task-pixie/applications/security"
+	"github.com/wisle25/task-pixie/applications/validation"
+	"github.com/wisle25/task-pixie/commons"
+	"github.com/wisle25/task-pixie/domains/entity"
+	"github.com/wisle25/task-pixie/domains/repository"
 	"io"
 	"time"
 )
@@ -63,7 +63,7 @@ func (uc *UserUseCase) ExecuteAdd(payload *entity.RegisterUserPayload) string {
 
 // ExecuteLogin Handling user login. Returning user's token for authentication/authorization later.
 // Should raise panic if user is not existed
-// Returned tokens must be added to the HTTP cookie
+// Returned tokens must be added to the HTTP Header
 func (uc *UserUseCase) ExecuteLogin(payload *entity.LoginUserPayload) (*entity.TokenDetail, *entity.TokenDetail) {
 	uc.validator.ValidateLoginPayload(payload)
 

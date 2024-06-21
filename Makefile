@@ -58,6 +58,6 @@ restart:
 
 minio-access:
 	mc alias set myminio http://localhost:9000 $(MINIO_ACCESS_KEY) $(MINIO_SECRET_KEY)
-	mc anonymous set download myminio/be-template
+	mc anonymous set download myminio/task-pixie
 
 .PHONY: install-migrate create-migration migrate-up migrate-down migrate-up-test migrate-down-test migrate-fix restart minio-access

@@ -3,8 +3,8 @@ package main
 import (
 	"fmt"
 	"github.com/gofiber/fiber/v2/log"
-	"github.com/wisle25/be-template/commons"
-	"github.com/wisle25/be-template/infrastructures/server"
+	"github.com/wisle25/task-pixie/commons"
+	"github.com/wisle25/task-pixie/infrastructures/server"
 )
 
 func main() {

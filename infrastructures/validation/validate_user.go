@@ -2,9 +2,9 @@ package validation
 
 import (
 	"fmt"
-	"github.com/wisle25/be-template/applications/validation"
-	"github.com/wisle25/be-template/domains/entity"
-	"github.com/wisle25/be-template/infrastructures/services"
+	"github.com/wisle25/task-pixie/applications/validation"
+	"github.com/wisle25/task-pixie/domains/entity"
+	"github.com/wisle25/task-pixie/infrastructures/services"
 )
 
 type GoValidateUser struct /* implements GoValidateUser */ {

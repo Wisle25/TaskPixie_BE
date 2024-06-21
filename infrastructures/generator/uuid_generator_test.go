@@ -2,7 +2,7 @@
 
 import (
 	"github.com/stretchr/testify/assert"
-	"github.com/wisle25/be-template/infrastructures/generator"
+	"github.com/wisle25/task-pixie/infrastructures/generator"
 	"testing"
 )
 

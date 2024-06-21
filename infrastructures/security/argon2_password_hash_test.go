@@ -4,7 +4,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/wisle25/be-template/infrastructures/security"
+	"github.com/wisle25/task-pixie/infrastructures/security"
 )
 
 func TestArgon2PasswordHash(t *testing.T) {

@@ -1,4 +1,4 @@
-module github.com/wisle25/be-template
+module github.com/wisle25/task-pixie
 
 go 1.22.2
 

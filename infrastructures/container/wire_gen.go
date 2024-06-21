@@ -8,15 +8,15 @@ package container
 
 import (
 	"database/sql"
-	"github.com/wisle25/be-template/applications/cache"
-	"github.com/wisle25/be-template/applications/file_statics"
-	"github.com/wisle25/be-template/applications/generator"
-	"github.com/wisle25/be-template/applications/use_case"
-	"github.com/wisle25/be-template/commons"
-	"github.com/wisle25/be-template/infrastructures/repository"
-	"github.com/wisle25/be-template/infrastructures/security"
-	"github.com/wisle25/be-template/infrastructures/services"
-	"github.com/wisle25/be-template/infrastructures/validation"
+	"github.com/wisle25/task-pixie/applications/cache"
+	"github.com/wisle25/task-pixie/applications/file_statics"
+	"github.com/wisle25/task-pixie/applications/generator"
+	"github.com/wisle25/task-pixie/applications/use_case"
+	"github.com/wisle25/task-pixie/commons"
+	"github.com/wisle25/task-pixie/infrastructures/repository"
+	"github.com/wisle25/task-pixie/infrastructures/security"
+	"github.com/wisle25/task-pixie/infrastructures/services"
+	"github.com/wisle25/task-pixie/infrastructures/validation"
 )
 
 // Injectors from container.go:
@@ -29,4 +29,18 @@ func NewUserContainer(config *commons.Config, db *sql.DB, cache2 cache.Cache, id
 	token := security.NewJwtToken(idGenerator)
 	userUseCase := use_case.NewUserUseCase(userRepository, fileProcessing, fileUpload, passwordHash, validateUser, config, token, cache2)
 	return userUseCase
+}
+
+// Dependency Injection for Project Use Case
+func NewProjectContainer(idGenerator generator.IdGenerator, db *sql.DB) *use_case.ProjectUseCase {
+	projectRepository := repository.NewProjectRepositoryPG(idGenerator, db)
+	projectUseCase := use_case.NewProjectUseCase(projectRepository)
+	return projectUseCase
+}
+
+// Dependency Injection for Task Use Case
+func NewTaskContainer(idgenerator generator.IdGenerator, db *sql.DB) *use_case.TaskUseCase {
+	taskRepository := repository.NewTaskRepositoryPG(idgenerator, db)
+	taskUseCase := use_case.NewTaskUseCase(taskRepository)
+	return taskUseCase
 }

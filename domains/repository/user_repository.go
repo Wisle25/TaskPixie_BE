@@ -1,6 +1,6 @@
 package repository
 
-import "github.com/wisle25/be-template/domains/entity"
+import "github.com/wisle25/task-pixie/domains/entity"
 
 // UserRepository defines methods for interacting with the user-related data in the database.
 type UserRepository interface {

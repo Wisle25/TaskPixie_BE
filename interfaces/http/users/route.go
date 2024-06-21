@@ -2,8 +2,8 @@
 
 import (
 	"github.com/gofiber/fiber/v2"
-	"github.com/wisle25/be-template/applications/use_case"
-	"github.com/wisle25/be-template/interfaces/http/middlewares"
+	"github.com/wisle25/task-pixie/applications/use_case"
+	"github.com/wisle25/task-pixie/interfaces/http/middlewares"
 )
 
 func NewUserRouter(

@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"github.com/minio/minio-go/v7"
 	"github.com/minio/minio-go/v7/pkg/credentials"
-	"github.com/wisle25/be-template/commons"
+	"github.com/wisle25/task-pixie/commons"
 	"log"
 )
 

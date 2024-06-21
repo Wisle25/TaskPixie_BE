@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/gofiber/fiber/v2"
 	"github.com/matthewhartstonge/argon2"
-	"github.com/wisle25/be-template/applications/security"
+	"github.com/wisle25/task-pixie/applications/security"
 )
 
 // Argon2PasswordHash Using argon2 for password hashing

@@ -3,8 +3,8 @@ package db_helper
 import (
 	"database/sql"
 	"github.com/google/uuid"
-	"github.com/wisle25/be-template/domains/entity"
-	"github.com/wisle25/be-template/infrastructures/services"
+	"github.com/wisle25/task-pixie/domains/entity"
+	"github.com/wisle25/task-pixie/infrastructures/services"
 )
 
 type UserHelperDB struct {

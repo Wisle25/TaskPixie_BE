@@ -5,8 +5,8 @@ import (
 	"context"
 	"fmt"
 	"github.com/minio/minio-go/v7"
-	"github.com/wisle25/be-template/applications/file_statics"
-	"github.com/wisle25/be-template/applications/generator"
+	"github.com/wisle25/task-pixie/applications/file_statics"
+	"github.com/wisle25/task-pixie/applications/generator"
 	"io"
 )
 

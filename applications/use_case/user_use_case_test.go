@@ -1,9 +1,9 @@
 package use_case_test
 
 import (
-	"github.com/wisle25/be-template/applications/file_statics"
-	"github.com/wisle25/be-template/applications/use_case"
-	"github.com/wisle25/be-template/domains/entity"
+	"github.com/wisle25/task-pixie/applications/file_statics"
+	"github.com/wisle25/task-pixie/applications/use_case"
+	"github.com/wisle25/task-pixie/domains/entity"
 	"io"
 	"mime/multipart"
 	"testing"
@@ -11,7 +11,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
-	"github.com/wisle25/be-template/commons"
+	"github.com/wisle25/task-pixie/commons"
 )
 
 // Mocks for the dependencies

@@ -1,6 +1,6 @@
 package validation
 
-import "github.com/wisle25/be-template/domains/entity"
+import "github.com/wisle25/task-pixie/domains/entity"
 
 // ValidateUser interface defines methods for validating user-related payloads.
 type ValidateUser interface {

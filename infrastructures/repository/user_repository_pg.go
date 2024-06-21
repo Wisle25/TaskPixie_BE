@@ -5,9 +5,9 @@ import (
 	"errors"
 	"fmt"
 	"github.com/gofiber/fiber/v2"
-	"github.com/wisle25/be-template/applications/generator"
-	"github.com/wisle25/be-template/domains/entity"
-	"github.com/wisle25/be-template/domains/repository"
+	"github.com/wisle25/task-pixie/applications/generator"
+	"github.com/wisle25/task-pixie/domains/entity"
+	"github.com/wisle25/task-pixie/domains/repository"
 	"strings"
 )
 

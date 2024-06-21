@@ -1,7 +1,7 @@
 ﻿package security
 
 import (
-	"github.com/wisle25/be-template/domains/entity"
+	"github.com/wisle25/task-pixie/domains/entity"
 	"time"
 )
 

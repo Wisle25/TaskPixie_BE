@@ -7,7 +7,7 @@ import (
 	"reflect"
 
 	_ "github.com/lib/pq"
-	"github.com/wisle25/be-template/commons"
+	"github.com/wisle25/task-pixie/commons"
 )
 
 // ConnectDB initializes a connection to the PostgreSQL cache using the provided configuration.

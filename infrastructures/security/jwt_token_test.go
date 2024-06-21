@@ -1,14 +1,14 @@
 ﻿package security_test
 
 import (
-	"github.com/wisle25/be-template/infrastructures/generator"
+	"github.com/wisle25/task-pixie/infrastructures/generator"
 	"testing"
 	"time"
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"github.com/wisle25/be-template/commons"
-	"github.com/wisle25/be-template/infrastructures/security"
+	"github.com/wisle25/task-pixie/commons"
+	"github.com/wisle25/task-pixie/infrastructures/security"
 )
 
 func TestJWTToken(t *testing.T) {
