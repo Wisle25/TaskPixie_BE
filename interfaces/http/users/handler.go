@@ -141,3 +141,14 @@ func (h *UserHandler) UpdateUserById(c *fiber.Ctx) error {
 		"message": "Successfully update user!",
 	})
 }
+
+func (h *UserHandler) SearchUsersByUsername(c *fiber.Ctx) error {
+	username := c.Query("username")
+
+	users := h.useCase.ExecuteSearchUsersByUsername(username)
+
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{
+		"status": "success",
+		"data":   users,
+	})
+}

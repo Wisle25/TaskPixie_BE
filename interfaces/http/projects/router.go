@@ -17,5 +17,6 @@ func NewProjectRouter(
 	app.Get("/projects/:id", jwtMiddleware.GuardJWT, projectHandler.GetProjectById)
 	app.Put("/projects/:id", jwtMiddleware.GuardJWT, projectHandler.UpdateProjectById)
 	app.Delete("/projects/:id", jwtMiddleware.GuardJWT, projectHandler.DeleteProjectById)
-	app.Get("/projects", jwtMiddleware.GuardJWT, projectHandler.GetProjectsByOwner)
+	app.Get("/projects", jwtMiddleware.GuardJWT, projectHandler.GetProjects)
+	app.Get("/projects-member/:id", projectHandler.GetMembersProject)
 }

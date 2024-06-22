@@ -39,8 +39,9 @@ func NewUserContainer(
 }
 
 // Dependency Injection for Project Use Case
-func NewProjectContainer(idGenerator generator.IdGenerator, db *sql.DB) *use_case.ProjectUseCase {
+func NewProjectContainer(idGenerator generator.IdGenerator, db *sql.DB, validator *services.Validation) *use_case.ProjectUseCase {
 	wire.Build(
+		validation.NewValidateProject,
 		repository.NewProjectRepositoryPG,
 		use_case.NewProjectUseCase,
 	)
@@ -51,8 +52,10 @@ func NewProjectContainer(idGenerator generator.IdGenerator, db *sql.DB) *use_cas
 func NewTaskContainer(
 	idgenerator generator.IdGenerator,
 	db *sql.DB,
+	validator *services.Validation,
 ) *use_case.TaskUseCase {
 	wire.Build(
+		validation.NewValidateTask,
 		repository.NewTaskRepositoryPG,
 		use_case.NewTaskUseCase,
 	)

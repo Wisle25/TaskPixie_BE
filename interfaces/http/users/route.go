@@ -20,4 +20,5 @@ func NewUserRouter(
 	app.Delete("/auths", jwtMiddleware.GuardJWT, userHandler.Logout)
 	app.Get("/users/:id", userHandler.GetUserById)
 	app.Put("/users/:id", jwtMiddleware.GuardJWT, userHandler.UpdateUserById)
+	app.Get("/usersSearch", userHandler.SearchUsersByUsername)
 }

@@ -22,4 +22,6 @@ type UserRepository interface {
 	// It should raise panic if user is not existed
 	// Returns old avatar link (Link is used to delete the old one)
 	UpdateUserById(id string, payload *entity.UpdateUserPayload, newAvatarLink string) string
+
+	SearchUsersByUsername(username string) []entity.User
 }

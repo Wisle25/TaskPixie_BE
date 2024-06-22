@@ -76,8 +76,8 @@ func CreateServer(config *commons.Config) *fiber.App {
 		minioFileUpload,
 		validation,
 	)
-	projectUseCase := container.NewProjectContainer(uuidGenerator, db)
-	tasksUseCase := container.NewTaskContainer(uuidGenerator, db)
+	projectUseCase := container.NewProjectContainer(uuidGenerator, db, validation)
+	tasksUseCase := container.NewTaskContainer(uuidGenerator, db, validation)
 
 	// Custom Middleware
 	jwtMiddleware := middlewares.NewJwtMiddleware(userUseCase)

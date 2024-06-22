@@ -32,15 +32,17 @@ func NewUserContainer(config *commons.Config, db *sql.DB, cache2 cache.Cache, id
 }
 
 // Dependency Injection for Project Use Case
-func NewProjectContainer(idGenerator generator.IdGenerator, db *sql.DB) *use_case.ProjectUseCase {
-	projectRepository := repository.NewProjectRepositoryPG(idGenerator, db)
-	projectUseCase := use_case.NewProjectUseCase(projectRepository)
+func NewProjectContainer(idGenerator generator.IdGenerator, db *sql.DB, validator *services.Validation) *use_case.ProjectUseCase {
+	projectRepository := repository.NewProjectRepositoryPG(db, idGenerator)
+	validateProject := validation.NewValidateProject(validator)
+	projectUseCase := use_case.NewProjectUseCase(projectRepository, validateProject)
 	return projectUseCase
 }
 
 // Dependency Injection for Task Use Case
-func NewTaskContainer(idgenerator generator.IdGenerator, db *sql.DB) *use_case.TaskUseCase {
+func NewTaskContainer(idgenerator generator.IdGenerator, db *sql.DB, validator *services.Validation) *use_case.TaskUseCase {
 	taskRepository := repository.NewTaskRepositoryPG(idgenerator, db)
-	taskUseCase := use_case.NewTaskUseCase(taskRepository)
+	validateTask := validation.NewValidateTask(validator)
+	taskUseCase := use_case.NewTaskUseCase(taskRepository, validateTask)
 	return taskUseCase
 }

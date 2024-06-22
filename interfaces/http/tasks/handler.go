@@ -15,16 +15,12 @@ func NewTaskHandler(useCase *use_case.TaskUseCase) *TaskHandler {
 }
 
 func (h *TaskHandler) AddTask(c *fiber.Ctx) error {
-	var task entity.Task
-	if err := c.BodyParser(&task); err != nil {
-		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-			"status":  "fail",
-			"message": "Invalid request payload",
-		})
-	}
-	task.UserId = c.Locals("userInfo").(entity.User).Id
+	var task entity.TaskPayload
+	_ = c.BodyParser(&task)
 
-	taskId := h.useCase.ExecuteAddTask(&task)
+	userId := c.Locals("userInfo").(entity.User).Id
+
+	taskId := h.useCase.ExecuteAddTask(&task, userId)
 
 	return c.Status(fiber.StatusCreated).JSON(fiber.Map{
 		"status":  "success",
@@ -42,9 +38,11 @@ func (h *TaskHandler) GetTaskById(c *fiber.Ctx) error {
 	})
 }
 
-func (h *TaskHandler) GetTasksByUser(c *fiber.Ctx) error {
-	userId := c.Params("userId")
-	tasks := h.useCase.ExecuteGetTasksByUser(userId)
+func (h *TaskHandler) GetTasks(c *fiber.Ctx) error {
+	userId := c.Locals("userInfo").(entity.User).Id
+
+	tasks := h.useCase.ExecuteGetTasks(userId)
+
 	return c.Status(fiber.StatusOK).JSON(fiber.Map{
 		"status": "success",
 		"data":   tasks,
@@ -53,7 +51,9 @@ func (h *TaskHandler) GetTasksByUser(c *fiber.Ctx) error {
 
 func (h *TaskHandler) GetTasksByProject(c *fiber.Ctx) error {
 	projectId := c.Params("projectId")
-	tasks := h.useCase.ExecuteGetTasksByProject(projectId)
+
+	tasks := h.useCase.ExecuteGetTasksByProjects(projectId)
+
 	return c.Status(fiber.StatusOK).JSON(fiber.Map{
 		"status": "success",
 		"data":   tasks,
@@ -61,25 +61,23 @@ func (h *TaskHandler) GetTasksByProject(c *fiber.Ctx) error {
 }
 
 func (h *TaskHandler) UpdateTask(c *fiber.Ctx) error {
-	var task entity.Task
-	if err := c.BodyParser(&task); err != nil {
-		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-			"status":  "fail",
-			"message": "Invalid request payload",
-		})
-	}
+	id := c.Params("id")
 
-	taskId := h.useCase.ExecuteUpdateTask(&task)
+	var payload entity.TaskPayload
+	_ = c.BodyParser(&payload)
+
+	h.useCase.ExecuteUpdateTaskById(id, &payload)
+
 	return c.Status(fiber.StatusOK).JSON(fiber.Map{
 		"status":  "success",
-		"data":    taskId,
 		"message": "Task updated successfully",
 	})
 }
 
 func (h *TaskHandler) DeleteTask(c *fiber.Ctx) error {
 	id := c.Params("id")
-	h.useCase.ExecuteDeleteTask(id)
+	h.useCase.ExecuteDeleteTaskById(id)
+
 	return c.Status(fiber.StatusOK).JSON(fiber.Map{
 		"status":  "success",
 		"message": "Task deleted successfully",

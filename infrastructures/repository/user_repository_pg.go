@@ -8,6 +8,7 @@ import (
 	"github.com/wisle25/task-pixie/applications/generator"
 	"github.com/wisle25/task-pixie/domains/entity"
 	"github.com/wisle25/task-pixie/domains/repository"
+	"log"
 	"strings"
 )
 
@@ -114,7 +115,7 @@ func (r *UserRepositoryPG) GetUserById(id string) *entity.User {
 }
 
 func (r *UserRepositoryPG) UpdateUserById(id string, payload *entity.UpdateUserPayload, newAvatarLink string) string {
-	// Base query and arguments (Only updating the password if its not empty)
+	// Base query and arguments (Only updating the password if it's not empty)
 	query := `
 		WITH old_data AS (
 			SELECT avatar_link
@@ -153,4 +154,34 @@ func (r *UserRepositoryPG) UpdateUserById(id string, payload *entity.UpdateUserP
 	}
 
 	return oldAvatarLink
+}
+
+func (r *UserRepositoryPG) SearchUsersByUsername(username string) []entity.User {
+	var users []entity.User
+	log.Println("Execute search users by username REPO: " + username)
+	query := `
+		SELECT
+		 id, username 
+		FROM users 
+		WHERE username ILIKE '%' || $1 || '%' 
+		FETCH FIRST 5 ROWS ONLY`
+	rows, err := r.db.Query(query, username)
+	if err != nil {
+		panic(fmt.Errorf("user_repo_pg_error: search users by username: %v", err))
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		var user entity.User
+		if err := rows.Scan(&user.Id, &user.Username); err != nil {
+			panic(fmt.Errorf("user_repo_pg_error: scan user: %v", err))
+		}
+		users = append(users, user)
+	}
+
+	if err := rows.Err(); err != nil {
+		panic(fmt.Errorf("user_repo_pg_error: rows error: %v", err))
+	}
+
+	return users
 }

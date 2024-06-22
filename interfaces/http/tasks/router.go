@@ -15,7 +15,7 @@ func NewTaskRouter(
 
 	app.Post("/tasks", jwtMiddleware.GuardJWT, taskHandler.AddTask)
 	app.Get("/tasks/:id", jwtMiddleware.GuardJWT, taskHandler.GetTaskById)
-	app.Get("/tasks/user/:userId", jwtMiddleware.GuardJWT, taskHandler.GetTasksByUser)
+	app.Get("/tasks", jwtMiddleware.GuardJWT, taskHandler.GetTasks)
 	app.Get("/tasks/project/:projectId", jwtMiddleware.GuardJWT, taskHandler.GetTasksByProject)
 	app.Put("/tasks/:id", jwtMiddleware.GuardJWT, taskHandler.UpdateTask)
 	app.Delete("/tasks/:id", jwtMiddleware.GuardJWT, taskHandler.DeleteTask)

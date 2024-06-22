@@ -2,16 +2,27 @@
 
 // ProjectPayload represents the payload for creating or updating a project.
 type ProjectPayload struct {
-	Name        string `json:"name"`
-	Description string `json:"description"`
+	Title     string   `json:"title"`
+	Detail    string   `json:"detail"`
+	Priority  string   `json:"priority"`
+	Status    string   `json:"status"`
+	MembersId []string `json:"members"` // User IDs
 }
 
-// Project represents a project in the system.
+// PreviewProject represents a brief overview of a project.
+type PreviewProject struct {
+	Id    string `json:"id"`
+	Title string `json:"title"`
+}
+
+// Project represents the detailed view of a project in the system.
 type Project struct {
-	Id            string `json:"id"`
-	Name          string `json:"name"`
-	Description   string `json:"description"`
-	OwnerId       string `json:"ownerId"`
-	OwnerUsername string `json:"ownerUsername"`
-	CreatedAt     string `json:"createdAt"`
+	Id              string   `json:"id"`
+	Title           string   `json:"title"`
+	Detail          string   `json:"detail"`
+	Priority        string   `json:"priority"`
+	Status          string   `json:"status"`
+	MembersUsername []string `json:"members"` // Usernames or User IDs as needed
+	CreatedAt       string   `json:"createdAt"`
+	UpdatedAt       string   `json:"updatedAt"`
 }

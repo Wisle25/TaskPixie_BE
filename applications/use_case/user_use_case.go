@@ -11,6 +11,7 @@ import (
 	"github.com/wisle25/task-pixie/domains/entity"
 	"github.com/wisle25/task-pixie/domains/repository"
 	"io"
+	"log"
 	"time"
 )
 
@@ -164,4 +165,10 @@ func (uc *UserUseCase) ExecuteUpdateUserById(userId string, payload *entity.Upda
 	if oldAvatarLink != "" {
 		uc.fileUpload.RemoveFile(oldAvatarLink)
 	}
+}
+
+// ExecuteSearchUsersByUsername handles the logic for searching users by username.
+func (uc *UserUseCase) ExecuteSearchUsersByUsername(username string) []entity.User {
+	log.Println("Execute search users by username USE CASE: " + username)
+	return uc.userRepository.SearchUsersByUsername(username)
 }
